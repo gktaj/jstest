@@ -4,12 +4,12 @@ window.addEventListener('DOMContentLoaded', () => {
     var launchFilter = document.querySelectorAll('.launchfilter input');
     var landFilter = document.querySelectorAll('.landfilter input');
     var qs = (function(a) {
-        if (a == "") return {};
+        if (a === "") return {};
         var b = {};
         for (var i = 0; i < a.length; ++i)
         {
             var p=a[i].split('=', 2);
-            if (p.length == 1)
+            if (p.length === 1)
                 b[p[0]] = "";
             else
                 b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
@@ -33,7 +33,7 @@ window.addEventListener('DOMContentLoaded', () => {
     })
     const qsr = Object.keys(qs).map(key => `${key}=${qs[key]}`).join('&');
 
-    fetch(`https://api.spaceXdata.com/v3/launches?limit=100&${qsr}`)
+    fetch(`https://api.spaceXdata.com/v3/launches?limit=100&${qsr}`,{ mode: "no-cors" })
     .then(res => res.json())
     .then(data => {
         data.length?data.forEach(element => {
@@ -58,7 +58,7 @@ window.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.loading').style.display ="block";
         loadList.innerHTML =""
         window.history.replaceState(null, null, `?launch_success=${params1}&land_success=${params2}&launch_year=${params3}`);
-        fetch(`https://api.spaceXdata.com/v3/launches?limit=100&launch_success=${params1}&land_success=${params2}&launch_year=${params3}`)
+        fetch(`https://api.spaceXdata.com/v3/launches?limit=100&launch_success=${params1}&land_success=${params2}&launch_year=${params3}`, { mode: "no-cors" })
         .then(res => res.json())
         .then(data => {
             console.log(data);
